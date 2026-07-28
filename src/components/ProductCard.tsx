@@ -123,9 +123,27 @@ export default function ProductCard({ product, index = 0 }: { product: Product; 
           )}
 
           {/* Product Image Area */}
-          <div className="relative h-44 bg-gradient-to-br from-nexus-surface to-nexus-bg flex items-center justify-center group-hover:from-nexus-blue/10 group-hover:to-nexus-purple/10 transition-all duration-500 border-b border-nexus-border/50">
-            <span className="text-6xl group-hover:scale-110 transition-transform duration-300">{getProductEmoji()}</span>
-            
+          <div className="relative h-44 bg-gradient-to-br from-nexus-surface to-nexus-bg flex items-center justify-center group-hover:from-nexus-blue/10 group-hover:to-nexus-purple/10 transition-all duration-500 border-b border-nexus-border/50 overflow-hidden">
+            {product.images && product.images[0] ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={product.images[0]}
+                alt={product.name}
+                className="w-full h-full object-contain p-3 group-hover:scale-105 transition-transform duration-300"
+                onError={(e) => {
+                  e.currentTarget.style.display = "none";
+                  const emoji = e.currentTarget.nextElementSibling as HTMLElement;
+                  if (emoji) emoji.style.display = "flex";
+                }}
+              />
+            ) : null}
+            <span
+              className="text-6xl group-hover:scale-110 transition-transform duration-300"
+              style={{ display: product.images && product.images[0] ? "none" : "flex" }}
+            >
+              {getProductEmoji()}
+            </span>
+
             {/* Quick actions */}
             <div className="absolute bottom-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               <button 

@@ -135,19 +135,38 @@ export default function ProductDetailPage() {
       <div className="grid md:grid-cols-2 gap-12">
         {/* Image area */}
         <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="relative">
-          <div className="bg-nexus-card border border-nexus-border rounded-none p-12 flex items-center justify-center min-h-[400px] relative overflow-hidden">
+          <div className="bg-nexus-card border border-nexus-border rounded-none flex items-center justify-center min-h-[400px] relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-nexus-blue/5 to-nexus-purple/5" />
-            <span className="text-[120px] relative z-10">{getEmoji()}</span>
+            {product.images && product.images[0] ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={product.images[0]}
+                alt={product.name}
+                className="relative z-10 max-h-80 w-full object-contain p-6"
+                onError={(e) => {
+                  e.currentTarget.style.display = "none";
+                  const emoji = e.currentTarget.nextElementSibling as HTMLElement;
+                  if (emoji) emoji.style.display = "block";
+                }}
+              />
+            ) : null}
+            <span
+              className="text-[120px] relative z-10"
+              style={{ display: product.images && product.images[0] ? "none" : "block" }}
+            >
+              {getEmoji()}
+            </span>
             {/* Badges */}
-            <div className="absolute top-4 left-4 flex flex-col gap-2">
+            <div className="absolute top-4 left-4 flex flex-col gap-2 z-20">
               {discount > 0 && <span className="px-3 py-1 bg-nexus-red text-white text-xs font-bold rounded-none">-{discount}% OFF</span>}
               {product.isNewArrival && <span className="px-3 py-1 bg-nexus-blue text-black text-xs font-bold rounded-none">NEW</span>}
               {product.isBestSeller && <span className="px-3 py-1 bg-nexus-purple text-white text-xs font-bold rounded-none">BEST SELLER</span>}
             </div>
             {outOfStock && (
-              <div className="absolute top-4 right-4 px-3 py-1 bg-red-900/80 text-red-300 text-xs font-bold rounded-none">OUT OF STOCK</div>
+              <div className="absolute top-4 right-4 px-3 py-1 bg-red-900/80 text-red-300 text-xs font-bold rounded-none z-20">OUT OF STOCK</div>
             )}
           </div>
+
         </motion.div>
 
         {/* Product Info */}
