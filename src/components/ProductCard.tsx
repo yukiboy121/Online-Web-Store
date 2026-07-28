@@ -66,35 +66,35 @@ export default function ProductCard({ product, index = 0 }: { product: Product; 
       transition={{ delay: index * 0.05, duration: 0.3 }}
     >
       <Link href={`/products/${product.id}`} className="group block">
-        <div className={`relative bg-nexus-card border border-nexus-border rounded-xl overflow-hidden hover:border-nexus-blue/30 transition-all duration-300 hover:shadow-lg hover:shadow-nexus-blue/5 ${outOfStock ? "opacity-70" : ""}`}>
+        <div className={`relative bg-nexus-card border border-nexus-border rounded-none overflow-hidden hover:border-nexus-blue/60 transition-all duration-300 hover:shadow-2xl hover:shadow-nexus-blue/10 ${outOfStock ? "opacity-70" : ""}`}>
           {/* Badges */}
-          <div className="absolute top-3 left-3 z-10 flex flex-col gap-1">
+          <div className="absolute top-3 left-3 z-10 flex flex-col gap-1.5">
             {discount > 0 && (
-              <span className="px-2 py-0.5 bg-nexus-red text-white text-[10px] font-bold rounded-full">
+              <span className="px-2 py-0.5 bg-nexus-red text-white text-[9px] font-bold uppercase tracking-wider rounded-none">
                 -{discount}%
               </span>
             )}
             {product.isNewArrival && (
-              <span className="px-2 py-0.5 bg-nexus-blue text-white text-[10px] font-bold rounded-full">NEW</span>
+              <span className="px-2 py-0.5 bg-nexus-blue text-black text-[9px] font-bold uppercase tracking-wider rounded-none">NEW</span>
             )}
             {product.isBestSeller && (
-              <span className="px-2 py-0.5 bg-nexus-purple text-white text-[10px] font-bold rounded-full">BEST</span>
+              <span className="px-2 py-0.5 bg-nexus-purple text-white text-[9px] font-bold uppercase tracking-wider rounded-none">BEST</span>
             )}
           </div>
 
           {outOfStock && (
-            <div className="absolute top-3 right-3 z-10 px-2 py-0.5 bg-red-900/80 text-red-300 text-[10px] font-bold rounded-full">
+            <div className="absolute top-3 right-3 z-10 px-2 py-0.5 bg-red-900/90 text-red-100 text-[9px] font-bold uppercase tracking-wider rounded-none">
               OUT OF STOCK
             </div>
           )}
 
           {/* Product Image Area */}
-          <div className="relative h-44 bg-gradient-to-br from-nexus-surface to-nexus-bg flex items-center justify-center group-hover:from-nexus-blue/5 group-hover:to-nexus-purple/5 transition-all duration-500">
+          <div className="relative h-44 bg-gradient-to-br from-nexus-surface to-nexus-bg flex items-center justify-center group-hover:from-nexus-blue/10 group-hover:to-nexus-purple/10 transition-all duration-500 border-b border-nexus-border/50">
             <span className="text-6xl group-hover:scale-110 transition-transform duration-300">{getProductEmoji()}</span>
             
             {/* Quick actions */}
-            <div className="absolute bottom-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-              <button onClick={addToCart} disabled={outOfStock} className="p-2 bg-nexus-blue text-white rounded-lg hover:bg-nexus-blue/80 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+            <div className="absolute bottom-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <button onClick={addToCart} disabled={outOfStock} className="p-2 bg-nexus-blue text-black rounded-none hover:bg-nexus-blue/80 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200">
                 <ShoppingCart className="w-4 h-4" />
               </button>
             </div>
@@ -102,8 +102,8 @@ export default function ProductCard({ product, index = 0 }: { product: Product; 
 
           {/* Info */}
           <div className="p-4">
-            <p className="text-[11px] text-nexus-muted font-medium uppercase tracking-wider mb-1">{product.brand}</p>
-            <h3 className="text-sm font-semibold line-clamp-2 group-hover:text-nexus-blue transition-colors leading-tight mb-2">
+            <p className="text-[10px] text-nexus-muted font-medium uppercase tracking-wider mb-1">{product.brand}</p>
+            <h3 className="text-sm font-semibold line-clamp-2 group-hover:text-nexus-blue transition-colors leading-tight mb-2 h-10">
               {product.name}
             </h3>
 
@@ -117,7 +117,7 @@ export default function ProductCard({ product, index = 0 }: { product: Product; 
               <div className="flex items-center gap-1 mt-2">
                 <div className="flex">
                   {[1, 2, 3, 4, 5].map(s => (
-                    <Star key={s} className={`w-3 h-3 ${s <= Math.round(rating) ? "text-yellow-400 fill-yellow-400" : "text-nexus-border"}`} />
+                    <Star key={s} className={`w-3 h-3 ${s <= Math.round(rating) ? "text-nexus-blue fill-nexus-blue" : "text-nexus-border"}`} />
                   ))}
                 </div>
                 <span className="text-[11px] text-nexus-muted">({product.reviewCount})</span>

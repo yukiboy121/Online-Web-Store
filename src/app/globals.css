@@ -1,76 +1,122 @@
 @import "tailwindcss";
 
 @theme {
-  --color-nexus-bg: #0a0a0f;
-  --color-nexus-card: #12121a;
-  --color-nexus-border: #1e1e2e;
-  --color-nexus-surface: #16161f;
-  --color-nexus-blue: #00b4ff;
-  --color-nexus-purple: #8b5cf6;
-  --color-nexus-cyan: #06d6a0;
-  --color-nexus-pink: #f472b6;
-  --color-nexus-red: #ef4444;
-  --color-nexus-text: #e2e8f0;
-  --color-nexus-muted: #64748b;
+  --color-nexus-bg: var(--nexus-bg);
+  --color-nexus-card: var(--nexus-card);
+  --color-nexus-border: var(--nexus-border);
+  --color-nexus-surface: var(--nexus-surface);
+  --color-nexus-blue: var(--nexus-blue);
+  --color-nexus-purple: var(--nexus-purple);
+  --color-nexus-cyan: var(--nexus-cyan);
+  --color-nexus-pink: var(--nexus-pink);
+  --color-nexus-red: var(--nexus-red);
+  --color-nexus-text: var(--nexus-text);
+  --color-nexus-muted: var(--nexus-muted);
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-display: 'Space Grotesk', sans-serif;
   --font-tech: 'Rajdhani', sans-serif;
+
+  --radius-xs: 0px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
+  --radius-full: 9999px;
+}
+
+:root {
+  --nexus-bg: #090807;
+  --nexus-card: #131110;
+  --nexus-border: #282420;
+  --nexus-surface: #181614;
+  --nexus-blue: #fbbf24;
+  --nexus-purple: #d97706;
+  --nexus-cyan: #ca8a04;
+  --nexus-pink: #f59e0b;
+  --nexus-red: #ef4444;
+  --nexus-text: #f5f5f4;
+  --nexus-muted: #8c8a82;
+}
+
+:root[data-theme="light"] {
+  --nexus-bg: #f9f8f6;
+  --nexus-card: #ffffff;
+  --nexus-border: #e3e0d8;
+  --nexus-surface: #f3f1eb;
+  --nexus-blue: #d97706;
+  --nexus-purple: #b45309;
+  --nexus-cyan: #ca8a04;
+  --nexus-pink: #d97706;
+  --nexus-red: #dc2626;
+  --nexus-text: #1c1816;
+  --nexus-muted: #7d776f;
 }
 
 body {
   background: var(--color-nexus-bg);
   color: var(--color-nexus-text);
   font-family: var(--font-sans);
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 ::-webkit-scrollbar {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #0a0a0f;
+  background: var(--color-nexus-bg);
 }
 ::-webkit-scrollbar-thumb {
-  background: #1e1e2e;
-  border-radius: 4px;
+  background: var(--color-nexus-border);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #00b4ff44;
+  background: var(--color-nexus-blue);
 }
 
 .glass {
-  background: rgba(18, 18, 26, 0.8);
+  background: rgba(19, 17, 16, 0.85);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--color-nexus-border);
+}
+
+:root[data-theme="light"] .glass {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid var(--color-nexus-border);
 }
 
 .glass-strong {
-  background: rgba(18, 18, 26, 0.95);
+  background: rgba(19, 17, 16, 0.95);
   backdrop-filter: blur(30px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--color-nexus-border);
+}
+
+:root[data-theme="light"] .glass-strong {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid var(--color-nexus-border);
 }
 
 .glow-blue {
-  box-shadow: 0 0 20px rgba(0, 180, 255, 0.15), 0 0 60px rgba(0, 180, 255, 0.05);
+  box-shadow: 0 0 20px rgba(251, 191, 36, 0.15), 0 0 60px rgba(251, 191, 36, 0.05);
 }
 .glow-purple {
-  box-shadow: 0 0 20px rgba(139, 92, 246, 0.15), 0 0 60px rgba(139, 92, 246, 0.05);
+  box-shadow: 0 0 20px rgba(217, 119, 6, 0.15), 0 0 60px rgba(217, 119, 6, 0.05);
 }
 
 .neon-blue {
-  text-shadow: 0 0 10px rgba(0, 180, 255, 0.5), 0 0 40px rgba(0, 180, 255, 0.2);
+  text-shadow: 0 0 10px rgba(251, 191, 36, 0.5), 0 0 40px rgba(251, 191, 36, 0.2);
 }
 .neon-purple {
-  text-shadow: 0 0 10px rgba(139, 92, 246, 0.5), 0 0 40px rgba(139, 92, 246, 0.2);
+  text-shadow: 0 0 10px rgba(217, 119, 6, 0.5), 0 0 40px rgba(217, 119, 6, 0.2);
 }
 
 .carbon-fiber {
   background-image: 
-    linear-gradient(45deg, rgba(255,255,255,0.02) 25%, transparent 25%),
-    linear-gradient(-45deg, rgba(255,255,255,0.02) 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, rgba(255,255,255,0.02) 75%),
-    linear-gradient(-45deg, transparent 75%, rgba(255,255,255,0.02) 75%);
-  background-size: 4px 4px;
-  background-position: 0 0, 0 2px, 2px -2px, -2px 0px;
+    linear-gradient(45deg, rgba(251, 191, 36, 0.01) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(251, 191, 36, 0.01) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgba(251, 191, 36, 0.01) 75%),
+    linear-gradient(-45deg, transparent 75%, rgba(251, 191, 36, 0.01) 75%);
+  background-size: 8px 8px;
 }
 
 @keyframes shimmer {
@@ -79,9 +125,9 @@ body {
 }
 
 .animate-shimmer {
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+  background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.08), transparent);
   background-size: 200% 100%;
-  animation: shimmer 2s infinite;
+  animation: shimmer 2.5s infinite linear;
 }
 
 input, select, textarea {
@@ -90,4 +136,15 @@ input, select, textarea {
 
 input:focus, select:focus, textarea:focus {
   outline: none;
+}
+
+/* Diagonal cut industrial look */
+.cyber-btn {
+  position: relative;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+}
+
+.cyber-panel {
+  position: relative;
+  border-left: 3px solid var(--color-nexus-blue);
 }

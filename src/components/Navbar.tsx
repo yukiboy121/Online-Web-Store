@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Monitor, ShoppingCart, User, Menu, X, Search, Heart,
-  Cpu, Layers, HardDrive, MemoryStick, Zap, Box, Wind, Gamepad2, Laptop, ChevronDown
+  Cpu, Layers, HardDrive, MemoryStick, Zap, Box, Wind, Gamepad2, Laptop, ChevronDown, Sun, Moon
 } from "lucide-react";
 
 const categories = [
@@ -27,6 +27,25 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [cartCount, setCartCount] = useState(0);
   const [user, setUser] = useState<{ name: string; role: string } | null>(null);
+
+  const [theme, setTheme] = useState("dark");
+
+  useEffect(() => {
+    const t = localStorage.getItem("theme") || "dark";
+    setTheme(t);
+  }, []);
+
+  const toggleTheme = () => {
+    const next = theme === "dark" ? "light" : "dark";
+    setTheme(next);
+    localStorage.setItem("theme", next);
+    document.documentElement.setAttribute("data-theme", next);
+    if (next === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -104,6 +123,9 @@ export default function Navbar() {
 
         {/* Right side */}
         <div className="flex items-center gap-3">
+          <button onClick={toggleTheme} className="p-2 hover:bg-nexus-surface rounded-lg transition-colors text-nexus-blue" aria-label="Toggle theme">
+            {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+          </button>
           <Link href="/wishlist" className="hidden sm:flex relative p-2 hover:bg-nexus-surface rounded-lg transition-colors">
             <Heart className="w-5 h-5" />
           </Link>
@@ -171,6 +193,12 @@ export default function Navbar() {
             className="md:hidden glass-strong border-t border-nexus-border overflow-hidden"
           >
             <div className="p-4 space-y-2">
+              <div className="flex items-center justify-between px-3 py-2">
+                <span className="text-sm font-medium text-nexus-muted">Theme Mode</span>
+                <button onClick={toggleTheme} className="p-2 bg-nexus-surface border border-nexus-border rounded-lg text-nexus-blue" aria-label="Toggle theme">
+                  {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+                </button>
+              </div>
               <div className="relative mb-3">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-nexus-muted" />
                 <input type="text" placeholder="Search..." className="w-full bg-nexus-surface border border-nexus-border rounded-lg pl-10 pr-4 py-2 text-sm" />
