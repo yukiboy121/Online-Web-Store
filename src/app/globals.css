@@ -148,3 +148,48 @@ input:focus, select:focus, textarea:focus {
   position: relative;
   border-left: 3px solid var(--color-nexus-blue);
 }
+
+/* ===== MOBILE APP STYLES ===== */
+
+/* Bottom nav glass bar */
+.mobile-nav-bar {
+  background: rgba(9, 8, 7, 0.97);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+}
+
+:root[data-theme="light"] .mobile-nav-bar {
+  background: rgba(255, 255, 255, 0.97);
+}
+
+/* Safe area padding for bottom content on mobile */
+.safe-bottom {
+  padding-bottom: calc(72px + env(safe-area-inset-bottom));
+}
+
+/* Hide scrollbar on mobile scroll containers */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Touch-friendly minimum tap target */
+@media (max-width: 767px) {
+  button, a {
+    min-height: 36px;
+  }
+
+  /* Hide desktop scrollbar on mobile */
+  ::-webkit-scrollbar { width: 0; }
+
+  /* Smooth momentum scrolling */
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Mobile product grid cards — tighter */
+@media (max-width: 480px) {
+  .mobile-card-tight {
+    padding: 0.5rem;
+  }
+}
+
