@@ -18,8 +18,26 @@ interface Product {
 export default function ProductDetailPage() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
+  const [product, setProduct] = useState<Product | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [qty, setQty] = useState(1);
+  const [addedToCart, setAddedToCart] = useState(false);
   const [inWishlist, setInWishlist] = useState(false);
 
+  // Fetch product data
+  useEffect(() => {
+    if (!id) return;
+    setLoading(true);
+    fetch(`/api/products/${id}`)
+      .then((r) => r.json())
+      .then((data) => {
+        setProduct(data.product ?? data ?? null);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, [id]);
+
+  // Sync wishlist state whenever product loads
   useEffect(() => {
     if (!product) return;
     const list = JSON.parse(localStorage.getItem("wishlist") || "[]");
