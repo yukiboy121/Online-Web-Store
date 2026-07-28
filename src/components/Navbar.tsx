@@ -96,7 +96,7 @@ export default function Navbar() {
   useEffect(() => {
     fetch("/api/auth/me").then(r => r.ok ? r.json() : null).then(d => {
       if (d?.user) setUser(d.user);
-    }).catch(() => {});
+    }).catch(() => { });
   }, []);
 
   const handleMobileSearch = (e: React.FormEvent) => {
@@ -114,7 +114,7 @@ export default function Navbar() {
       {/* DESKTOP ONLY top bar */}
       <div className="hidden md:block border-b border-nexus-border/50">
         <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-8 text-xs text-nexus-muted">
-          <span>🔥 Free shipping on orders over $500 | 30-Day Returns</span>
+          <span>Free shipping on orders over $500 | 30-Day Returns</span>
           <div className="flex items-center gap-4">
             <Link href="/quotations" className="hover:text-nexus-blue transition-colors">Quotations</Link>
             <Link href="/orders" className="hover:text-nexus-blue transition-colors">Track Order</Link>
@@ -212,7 +212,7 @@ export default function Navbar() {
           </div>
           <Link href="/products" className="px-3 py-1 text-sm hover:text-nexus-blue transition-colors">Shop All</Link>
           <Link href="/build-my-pc" className="px-3 py-1 text-sm font-semibold text-nexus-purple hover:text-nexus-blue transition-colors">Build My PC</Link>
-          <Link href="/products?filter=deals" className="px-3 py-1 text-sm text-nexus-pink hover:text-nexus-blue transition-colors">🔥 Deals</Link>
+          <Link href="/products?filter=deals" className="px-3 py-1 text-sm text-nexus-pink hover:text-nexus-blue transition-colors">Deals</Link>
         </div>
       </div>
 

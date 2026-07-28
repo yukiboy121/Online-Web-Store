@@ -196,7 +196,7 @@ export default function HomePage() {
         <section className="max-w-7xl mx-auto px-4 py-12">
           <div className="flex items-center justify-between mb-8">
             <div>
-              <h2 className="font-display text-2xl md:text-3xl font-bold">Best Sellers 🔥</h2>
+              <h2 className="font-display text-2xl md:text-3xl font-bold">Best Sellers</h2>
               <p className="text-nexus-muted mt-1">Most popular with our community</p>
             </div>
           </div>
@@ -211,7 +211,7 @@ export default function HomePage() {
         <section className="max-w-7xl mx-auto px-4 py-12">
           <div className="flex items-center justify-between mb-8">
             <div>
-              <h2 className="font-display text-2xl md:text-3xl font-bold">New Arrivals ✨</h2>
+              <h2 className="font-display text-2xl md:text-3xl font-bold">New Arrivals</h2>
               <p className="text-nexus-muted mt-1">Latest additions to our store</p>
             </div>
           </div>

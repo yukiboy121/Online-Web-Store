@@ -48,9 +48,8 @@ function CheckItem({ label, checked, count, onChange }: { label: string; checked
   return (
     <label className="flex items-center gap-2.5 py-1 cursor-pointer group">
       <span
-        className={`w-4 h-4 rounded-sm border flex items-center justify-center flex-shrink-0 transition-all ${
-          checked ? "bg-nexus-blue border-nexus-blue" : "border-nexus-border group-hover:border-nexus-blue/50"
-        }`}
+        className={`w-4 h-4 rounded-sm border flex items-center justify-center flex-shrink-0 transition-all ${checked ? "bg-nexus-blue border-nexus-blue" : "border-nexus-border group-hover:border-nexus-blue/50"
+          }`}
         onClick={onChange}
       >
         {checked && <Check className="w-3 h-3 text-black" strokeWidth={3} />}
@@ -208,15 +207,14 @@ function ProductsContent() {
           </div>
           {/* Quick price chips */}
           <div className="flex flex-wrap gap-1.5">
-            {[["Under $100","","100"],["$100–$500","100","500"],["$500–$1000","500","1000"],["$1000+","1000",""]].map(([label, min, max]) => {
+            {[["Under $100", "", "100"], ["$100–$500", "100", "500"], ["$500–$1000", "500", "1000"], ["$1000+", "1000", ""]].map(([label, min, max]) => {
               const active = priceMin === min && priceMax === max;
               return (
                 <button
                   key={label}
                   onClick={() => { setPriceMin(active ? "" : min); setPriceMax(active ? "" : max); }}
-                  className={`px-2.5 py-1 text-[11px] font-medium rounded-full border transition-all ${
-                    active ? "bg-nexus-blue text-black border-nexus-blue" : "border-nexus-border hover:border-nexus-blue/50 text-nexus-muted hover:text-nexus-text"
-                  }`}
+                  className={`px-2.5 py-1 text-[11px] font-medium rounded-full border transition-all ${active ? "bg-nexus-blue text-black border-nexus-blue" : "border-nexus-border hover:border-nexus-blue/50 text-nexus-muted hover:text-nexus-text"
+                    }`}
                 >
                   {label}
                 </button>
@@ -233,12 +231,11 @@ function ProductsContent() {
             <button
               key={r}
               onClick={() => setMinRating(minRating === r ? 0 : r)}
-              className={`flex items-center gap-2 w-full py-1.5 px-2 rounded-lg text-sm transition-all ${
-                minRating === r ? "bg-nexus-blue/10 text-nexus-blue" : "hover:bg-nexus-surface text-nexus-muted hover:text-nexus-text"
-              }`}
+              className={`flex items-center gap-2 w-full py-1.5 px-2 rounded-lg text-sm transition-all ${minRating === r ? "bg-nexus-blue/10 text-nexus-blue" : "hover:bg-nexus-surface text-nexus-muted hover:text-nexus-text"
+                }`}
             >
               <div className="flex">
-                {[1,2,3,4,5].map(s => (
+                {[1, 2, 3, 4, 5].map(s => (
                   <Star key={s} className={`w-3.5 h-3.5 ${s <= (r || 5) ? "text-nexus-blue fill-nexus-blue" : "text-nexus-border"}`} />
                 ))}
               </div>
@@ -252,9 +249,9 @@ function ProductsContent() {
       <FilterSection title="Quick Filters" defaultOpen={true}>
         <div className="space-y-0.5">
           <CheckItem label="In Stock Only" checked={inStockOnly} onChange={() => setInStockOnly(!inStockOnly)} />
-          <CheckItem label="🔥 On Sale / Deals" checked={onlyDeals} onChange={() => setOnlyDeals(!onlyDeals)} />
-          <CheckItem label="🆕 New Arrivals" checked={onlyNew} onChange={() => setOnlyNew(!onlyNew)} />
-          <CheckItem label="⭐ Best Sellers" checked={onlyBestSeller} onChange={() => setOnlyBestSeller(!onlyBestSeller)} />
+          <CheckItem label="On Sale / Deals" checked={onlyDeals} onChange={() => setOnlyDeals(!onlyDeals)} />
+          <CheckItem label="New Arrivals" checked={onlyNew} onChange={() => setOnlyNew(!onlyNew)} />
+          <CheckItem label="Best Sellers" checked={onlyBestSeller} onChange={() => setOnlyBestSeller(!onlyBestSeller)} />
         </div>
       </FilterSection>
     </div>
