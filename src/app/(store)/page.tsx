@@ -186,7 +186,7 @@ export default function HomePage() {
                 Start Building <ArrowRight className="w-5 h-5" />
               </Link>
             </div>
-            <div className="text-8xl">🖥️</div>
+            <div className="text-8xl"></div>
           </div>
         </div>
       </section>
