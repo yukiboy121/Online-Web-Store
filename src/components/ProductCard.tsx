@@ -28,6 +28,39 @@ export default function ProductCard({ product, index = 0 }: { product: Product; 
   const rating = Number(product.rating || 0);
   const outOfStock = product.stock <= 0;
 
+  const [inWishlist, setInWishlist] = useState(false);
+
+  useEffect(() => {
+    const list = JSON.parse(localStorage.getItem("wishlist") || "[]");
+    setInWishlist(list.some((i: { id: string }) => i.id === product.id));
+  }, [product.id]);
+
+  const toggleWishlist = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const list = JSON.parse(localStorage.getItem("wishlist") || "[]");
+    const existingIndex = list.findIndex((i: { id: string }) => i.id === product.id);
+    if (existingIndex > -1) {
+      list.splice(existingIndex, 1);
+      setInWishlist(false);
+    } else {
+      list.push({ 
+        id: product.id, 
+        name: product.name, 
+        brand: product.brand,
+        price: product.price, 
+        discountPrice: product.discountPrice,
+        images: product.images,
+        stock: product.stock,
+        rating: product.rating,
+        reviewCount: product.reviewCount
+      });
+      setInWishlist(true);
+    }
+    localStorage.setItem("wishlist", JSON.stringify(list));
+    window.dispatchEvent(new Event("wishlistUpdated"));
+  };
+
   const addToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -94,6 +127,17 @@ export default function ProductCard({ product, index = 0 }: { product: Product; 
             
             {/* Quick actions */}
             <div className="absolute bottom-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <button 
+                type="button"
+                onClick={toggleWishlist} 
+                className={`p-2 rounded-none transition-all duration-200 ${
+                  inWishlist 
+                    ? "bg-nexus-red text-white hover:bg-nexus-red/80" 
+                    : "bg-nexus-surface border border-nexus-border text-nexus-blue hover:bg-nexus-blue hover:text-black"
+                }`}
+              >
+                <Heart className={`w-4 h-4 ${inWishlist ? "fill-white" : ""}`} />
+              </button>
               <button onClick={addToCart} disabled={outOfStock} className="p-2 bg-nexus-blue text-black rounded-none hover:bg-nexus-blue/80 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200">
                 <ShoppingCart className="w-4 h-4" />
               </button>

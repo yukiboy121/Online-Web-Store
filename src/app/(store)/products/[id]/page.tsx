@@ -18,26 +18,47 @@ interface Product {
 export default function ProductDetailPage() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
-  const [product, setProduct] = useState<Product | null>(null);
-  const [qty, setQty] = useState(1);
-  const [loading, setLoading] = useState(true);
-  const [addedToCart, setAddedToCart] = useState(false);
+  const [inWishlist, setInWishlist] = useState(false);
 
   useEffect(() => {
-    fetch(`/api/products/${id}`).then(r => r.json()).then(d => {
-      setProduct(d.product || null);
-      setLoading(false);
-    });
-  }, [id]);
+    if (!product) return;
+    const list = JSON.parse(localStorage.getItem("wishlist") || "[]");
+    setInWishlist(list.some((i: { id: string }) => i.id === product.id));
+  }, [product]);
+
+  const toggleWishlist = () => {
+    if (!product) return;
+    const list = JSON.parse(localStorage.getItem("wishlist") || "[]");
+    const existingIndex = list.findIndex((i: { id: string }) => i.id === product.id);
+    if (existingIndex > -1) {
+      list.splice(existingIndex, 1);
+      setInWishlist(false);
+    } else {
+      list.push({ 
+        id: product.id, 
+        name: product.name, 
+        brand: product.brand,
+        price: product.price, 
+        discountPrice: product.discountPrice,
+        images: product.images,
+        stock: product.stock,
+        rating: product.rating,
+        reviewCount: product.reviewCount
+      });
+      setInWishlist(true);
+    }
+    localStorage.setItem("wishlist", JSON.stringify(list));
+    window.dispatchEvent(new Event("wishlistUpdated"));
+  };
 
   if (loading) return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       <div className="grid md:grid-cols-2 gap-12">
-        <div className="bg-nexus-card rounded-xl h-96 animate-shimmer" />
+        <div className="bg-nexus-card rounded-none h-96 animate-shimmer" />
         <div className="space-y-4">
-          <div className="bg-nexus-card rounded-xl h-8 w-48 animate-shimmer" />
-          <div className="bg-nexus-card rounded-xl h-12 animate-shimmer" />
-          <div className="bg-nexus-card rounded-xl h-6 w-32 animate-shimmer" />
+          <div className="bg-nexus-card rounded-none h-8 w-48 animate-shimmer" />
+          <div className="bg-nexus-card rounded-none h-12 animate-shimmer" />
+          <div className="bg-nexus-card rounded-none h-6 w-32 animate-shimmer" />
         </div>
       </div>
     </div>
@@ -96,17 +117,17 @@ export default function ProductDetailPage() {
       <div className="grid md:grid-cols-2 gap-12">
         {/* Image area */}
         <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="relative">
-          <div className="bg-nexus-card border border-nexus-border rounded-2xl p-12 flex items-center justify-center min-h-[400px] relative overflow-hidden">
+          <div className="bg-nexus-card border border-nexus-border rounded-none p-12 flex items-center justify-center min-h-[400px] relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-nexus-blue/5 to-nexus-purple/5" />
             <span className="text-[120px] relative z-10">{getEmoji()}</span>
             {/* Badges */}
             <div className="absolute top-4 left-4 flex flex-col gap-2">
-              {discount > 0 && <span className="px-3 py-1 bg-nexus-red text-white text-xs font-bold rounded-full">-{discount}% OFF</span>}
-              {product.isNewArrival && <span className="px-3 py-1 bg-nexus-blue text-white text-xs font-bold rounded-full">NEW</span>}
-              {product.isBestSeller && <span className="px-3 py-1 bg-nexus-purple text-white text-xs font-bold rounded-full">BEST SELLER</span>}
+              {discount > 0 && <span className="px-3 py-1 bg-nexus-red text-white text-xs font-bold rounded-none">-{discount}% OFF</span>}
+              {product.isNewArrival && <span className="px-3 py-1 bg-nexus-blue text-black text-xs font-bold rounded-none">NEW</span>}
+              {product.isBestSeller && <span className="px-3 py-1 bg-nexus-purple text-white text-xs font-bold rounded-none">BEST SELLER</span>}
             </div>
             {outOfStock && (
-              <div className="absolute top-4 right-4 px-3 py-1 bg-red-900/80 text-red-300 text-xs font-bold rounded-full">OUT OF STOCK</div>
+              <div className="absolute top-4 right-4 px-3 py-1 bg-red-900/80 text-red-300 text-xs font-bold rounded-none">OUT OF STOCK</div>
             )}
           </div>
         </motion.div>
@@ -122,7 +143,7 @@ export default function ProductDetailPage() {
           {/* Rating */}
           {rating > 0 && (
             <div className="flex items-center gap-2">
-              <div className="flex">{[1,2,3,4,5].map(s => <Star key={s} className={`w-5 h-5 ${s <= Math.round(rating) ? "text-yellow-400 fill-yellow-400" : "text-nexus-border"}`} />)}</div>
+              <div className="flex">{[1,2,3,4,5].map(s => <Star key={s} className={`w-5 h-5 ${s <= Math.round(rating) ? "text-nexus-blue fill-nexus-blue" : "text-nexus-border"}`} />)}</div>
               <span className="text-sm text-nexus-muted">{rating} ({product.reviewCount} reviews)</span>
             </div>
           )}
@@ -140,7 +161,7 @@ export default function ProductDetailPage() {
             ) : product.stock <= 10 ? (
               <span className="flex items-center gap-1 text-nexus-pink text-sm"><AlertTriangle className="w-4 h-4" /> Only {product.stock} left!</span>
             ) : (
-              <span className="flex items-center gap-1 text-nexus-cyan text-sm"><Check className="w-4 h-4" /> In Stock ({product.stock} available)</span>
+              <span className="flex items-center gap-1 text-nexus-blue text-sm"><Check className="w-4 h-4" /> In Stock ({product.stock} available)</span>
             )}
           </div>
 
@@ -149,7 +170,7 @@ export default function ProductDetailPage() {
 
           {/* Quantity + Add to cart */}
           <div className="flex items-center gap-4">
-            <div className="flex items-center border border-nexus-border rounded-lg">
+            <div className="flex items-center border border-nexus-border rounded-none">
               <button onClick={() => setQty(Math.max(1, qty - 1))} className="p-3 hover:bg-nexus-surface transition-colors"><Minus className="w-4 h-4" /></button>
               <span className="px-4 font-medium">{qty}</span>
               <button onClick={() => setQty(Math.min(product.stock, qty + 1))} className="p-3 hover:bg-nexus-surface transition-colors"><Plus className="w-4 h-4" /></button>
@@ -157,9 +178,20 @@ export default function ProductDetailPage() {
             <button
               onClick={addToCart}
               disabled={outOfStock}
-              className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-nexus-blue text-white font-semibold rounded-xl hover:bg-nexus-blue/80 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+              className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-nexus-blue text-black font-semibold rounded-none hover:bg-nexus-blue/80 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
             >
               {addedToCart ? <><Check className="w-5 h-5" /> Added!</> : <><ShoppingCart className="w-5 h-5" /> Add to Cart</>}
+            </button>
+            <button
+              onClick={toggleWishlist}
+              className={`p-3.5 border transition-all flex items-center justify-center rounded-none ${
+                inWishlist 
+                  ? "bg-nexus-red border-nexus-red text-white hover:bg-nexus-red/80" 
+                  : "bg-nexus-surface border-nexus-border text-nexus-blue hover:bg-nexus-blue hover:text-black"
+              }`}
+              title={inWishlist ? "Remove from Wishlist" : "Add to Wishlist"}
+            >
+              <Heart className={`w-5 h-5 ${inWishlist ? "fill-white" : ""}`} />
             </button>
           </div>
 

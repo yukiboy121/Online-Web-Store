@@ -26,6 +26,7 @@ export default function Navbar() {
   const [catOpen, setCatOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [cartCount, setCartCount] = useState(0);
+  const [wishlistCount, setWishlistCount] = useState(0);
   const [user, setUser] = useState<{ name: string; role: string } | null>(null);
 
   const [theme, setTheme] = useState("dark");
@@ -61,6 +62,13 @@ export default function Navbar() {
         setCartCount(items.reduce((s: number, i: { qty: number }) => s + i.qty, 0));
       } catch { setCartCount(0); }
     }
+    const storedWishlist = localStorage.getItem("wishlist");
+    if (storedWishlist) {
+      try {
+        const items = JSON.parse(storedWishlist);
+        setWishlistCount(items.length);
+      } catch { setWishlistCount(0); }
+    }
     const handleStorage = () => {
       const c = localStorage.getItem("cart");
       if (c) {
@@ -68,11 +76,22 @@ export default function Navbar() {
         catch { setCartCount(0); }
       } else setCartCount(0);
     };
+    const handleWishlistStorage = () => {
+      const w = localStorage.getItem("wishlist");
+      if (w) {
+        try { setWishlistCount(JSON.parse(w).length); }
+        catch { setWishlistCount(0); }
+      } else setWishlistCount(0);
+    };
     window.addEventListener("storage", handleStorage);
     window.addEventListener("cartUpdated", handleStorage);
+    window.addEventListener("storage", handleWishlistStorage);
+    window.addEventListener("wishlistUpdated", handleWishlistStorage);
     return () => {
       window.removeEventListener("storage", handleStorage);
       window.removeEventListener("cartUpdated", handleStorage);
+      window.removeEventListener("storage", handleWishlistStorage);
+      window.removeEventListener("wishlistUpdated", handleWishlistStorage);
     };
   }, []);
 
@@ -126,8 +145,13 @@ export default function Navbar() {
           <button onClick={toggleTheme} className="p-2 hover:bg-nexus-surface rounded-lg transition-colors text-nexus-blue" aria-label="Toggle theme">
             {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
           </button>
-          <Link href="/wishlist" className="hidden sm:flex relative p-2 hover:bg-nexus-surface rounded-lg transition-colors">
+          <Link href="/wishlist" className="hidden sm:flex relative p-2 hover:bg-nexus-surface rounded-lg transition-colors text-nexus-blue">
             <Heart className="w-5 h-5" />
+            {wishlistCount > 0 && (
+              <span className="absolute -top-1 -right-1 w-5 h-5 bg-nexus-red text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                {wishlistCount}
+              </span>
+            )}
           </Link>
           <Link href="/cart" className="relative p-2 hover:bg-nexus-surface rounded-lg transition-colors">
             <ShoppingCart className="w-5 h-5" />
