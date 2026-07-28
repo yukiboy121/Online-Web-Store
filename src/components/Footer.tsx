@@ -18,8 +18,8 @@ export default function Footer() {
             <p className="text-sm text-nexus-muted leading-relaxed">Premium gaming PCs and components. Build your dream machine with expert guidance.</p>
             <div className="mt-4 space-y-2 text-sm text-nexus-muted">
               <div className="flex items-center gap-2"><Mail className="w-4 h-4" /> support@nexuspc.com</div>
-              <div className="flex items-center gap-2"><Phone className="w-4 h-4" /> 1-800-NEXUS-PC</div>
-              <div className="flex items-center gap-2"><MapPin className="w-4 h-4" /> San Francisco, CA</div>
+              <div className="flex items-center gap-2"><Phone className="w-4 h-4" /> 075 123 4567</div>
+              <div className="flex items-center gap-2"><MapPin className="w-4 h-4" /> Horana, Sri Lanka</div>
             </div>
           </div>
           <div>
@@ -54,8 +54,8 @@ export default function Footer() {
           </div>
         </div>
         <div className="mt-8 pt-8 border-t border-nexus-border flex flex-col md:flex-row items-center justify-between text-sm text-nexus-muted">
-          <p>© 2024 NEXUS PC. All rights reserved.</p>
-          <p className="mt-2 md:mt-0">Powered by cutting-edge technology 🚀</p>
+          <p>© 2026 NEXUS PC. All rights reserved.</p>
+          <p className="mt-2 md:mt-0">Dev by Yuki Boy</p>
         </div>
       </div>
     </footer>
