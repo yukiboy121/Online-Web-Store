@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import {
   Cpu, Monitor, Layers, MemoryStick, HardDrive, Zap, Box, Wind, Gamepad2, Laptop,
@@ -171,22 +172,63 @@ export default function HomePage() {
       )}
 
       {/* Build CTA */}
-      <section className="max-w-7xl mx-auto px-4 py-12">
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-nexus-blue/20 via-nexus-purple/20 to-nexus-pink/20 p-8 md:p-12">
-          <div className="absolute inset-0 carbon-fiber opacity-30" />
-          <div className="relative flex flex-col md:flex-row items-center justify-between gap-8">
-            <div className="flex-1">
-              <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
-                PC Configuration <span className="text-nexus-purple">Builder</span>
-              </h2>
-              <p className="text-nexus-muted text-lg mb-6 max-w-md">
-                Select your components, check compatibility, and build your perfect gaming rig with our interactive builder.
-              </p>
-              <Link href="/build-my-pc" className="inline-flex items-center gap-2 px-6 py-3 bg-nexus-purple text-white font-semibold rounded-xl hover:bg-nexus-purple/80 transition-all">
-                Start Building <ArrowRight className="w-5 h-5" />
-              </Link>
+      <section className="max-w-7xl mx-auto px-4 py-16">
+        <div className="relative overflow-hidden rounded-[2rem] bg-[#050505] border border-nexus-blue/20 shadow-2xl p-8 md:p-16 group">
+          <div className="absolute inset-0 bg-gradient-to-br from-nexus-blue/10 via-transparent to-nexus-purple/10 opacity-50 group-hover:opacity-100 transition-opacity duration-700" />
+          <div className="absolute inset-0 carbon-fiber opacity-10" />
+          
+          {/* Animated Glow Elements */}
+          <div className="absolute -top-32 -right-32 w-[30rem] h-[30rem] bg-nexus-purple/20 rounded-full blur-[120px] animate-pulse pointer-events-none" />
+          <div className="absolute -bottom-32 -left-32 w-[30rem] h-[30rem] bg-nexus-blue/20 rounded-full blur-[120px] animate-pulse pointer-events-none" style={{ animationDelay: '1.5s' }} />
+
+          <div className="relative flex flex-col md:flex-row items-center justify-between gap-12">
+            <div className="flex-1 z-10">
+              <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full text-nexus-blue text-sm font-semibold mb-6 shadow-[0_0_20px_rgba(59,130,246,0.15)] backdrop-blur-md">
+                  <Sparkles className="w-4 h-4 text-nexus-purple" /> Professional Grade
+                </div>
+                <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight tracking-tight">
+                  Design Your Ultimate <br/>
+                  <span className="bg-gradient-to-r from-nexus-blue via-nexus-purple to-nexus-pink bg-clip-text text-transparent">Dream Machine</span>
+                </h2>
+                <p className="text-nexus-muted text-lg md:text-xl mb-10 max-w-lg font-light leading-relaxed">
+                  Experience our next-generation interactive builder. Select premium components, ensure flawless compatibility, and visualize your custom rig with uncompromised precision.
+                </p>
+                <div className="flex flex-wrap gap-4">
+                  <Link href="/build-my-pc" className="group relative inline-flex items-center gap-2 px-8 py-4 bg-white text-black font-bold rounded-xl overflow-hidden hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.3)] transition-all duration-300">
+                    <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-nexus-blue/20 to-nexus-purple/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <span className="relative flex items-center gap-2">Start Building <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" /></span>
+                  </Link>
+                </div>
+              </motion.div>
             </div>
-            <div className="text-8xl"></div>
+            
+            {/* Super Advanced Floating PC Visual */}
+            <div className="relative z-10 w-full md:w-1/2 flex justify-center">
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.8 }} 
+                whileInView={{ opacity: 1, scale: 1 }} 
+                viewport={{ once: true }} 
+                transition={{ duration: 0.8, type: "spring", bounce: 0.4 }}
+              >
+                <motion.div animate={{ y: [0, -15, 0] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }} className="relative w-full max-w-[500px]">
+                  {/* Advanced glow behind the PC */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-nexus-blue to-nexus-purple blur-[80px] opacity-30 rounded-full transform scale-75 group-hover:scale-100 transition-transform duration-700" />
+                  
+                  {/* Glassmorphic platform/shadow */}
+                  <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-3/4 h-12 bg-white/5 border border-white/10 rounded-[100%] blur-sm shadow-[0_0_40px_rgba(59,130,246,0.3)]" />
+                  
+                  <Image 
+                    src="/premium-pc.png" 
+                    alt="Premium Gaming PC" 
+                    width={800} 
+                    height={800}
+                    priority
+                    className="relative z-10 drop-shadow-[0_30px_50px_rgba(0,0,0,0.7)] object-contain w-full h-auto"
+                  />
+                </motion.div>
+              </motion.div>
+            </div>
           </div>
         </div>
       </section>
